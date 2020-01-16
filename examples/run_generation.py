@@ -232,10 +232,16 @@ def main():
         text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
         text = text[: text.find(args.stop_token) if args.stop_token else None]
         print(text)
+        return text
     else:
-        __import__('ipdb').set_trace()
-
-    return text
+        texts = []
+        for generated_sequence in output_sequences[0]:
+            generated_sequence = generated_sequence.tolist()
+            text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
+            text = text[: text.find(args.stop_token) if args.stop_token else None]
+            texts.append(text)
+        print(text)
+        return text
 
 
 if __name__ == "__main__":
