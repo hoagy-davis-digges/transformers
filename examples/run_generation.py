@@ -184,6 +184,7 @@ def main():
     parser.add_argument("--num_sequences", type=int, default=1, help="The number of sequences to generate")
     parser.add_argument("--seed", type=int, default=42, help="random seed for initialization")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
+    parser.add_argument("--num_beams", type=int, default=1, help="Number of beams for beam search")
     args = parser.parse_args()
 
     args.device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
@@ -224,6 +225,7 @@ def main():
         top_k=args.k,
         top_p=args.p,
         repetition_penalty=args.repetition_penalty,
+        num_beams=args.num_beams
     )
 
     # Batch size == 1. to add more examples please use num_return_sequences > 1
